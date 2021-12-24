@@ -1,10 +1,8 @@
 package com.spring.rest.controller;
 
 import com.spring.rest.entity.Student;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.spring.rest.exception.StudentNotFound;
+import org.springframework.web.bind.annotation.*;
 
 
 import javax.annotation.PostConstruct;
@@ -30,6 +28,9 @@ public class StudentController {
     }
     @GetMapping("/students/{studentId}")
     public Student getStudent(@PathVariable int studentId){
+        if(studentId>=students.size()||studentId<0){
+            throw new StudentNotFound("Student id not found: "+studentId);
+        }
         return students.get(studentId);
     }
 }
